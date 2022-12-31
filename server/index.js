@@ -12,8 +12,12 @@ app.use(cors());
 connect(`mongodb+srv://pomeckley:${process.env.DB_PASS}@cluster0.7uukid1.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
 
 app.get("/getUsers", (req, res) => {
-    find({}, (err, result) => {
-        res.json(err ? err : result);
+    UserModel.find({}, (err, result) => {
+        if(err) {
+            res.json(err)
+        } else {
+            res.json(result)
+        }
     })
 })
 
