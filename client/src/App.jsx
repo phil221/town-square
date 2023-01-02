@@ -8,24 +8,28 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 function App() {
-  const [userList, setUserList] = useState([]);
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-      getUsers();
+      getPosts();
   }, [])
 
-  function getUsers(){
-      Axios.get("http://localhost:3001/getUsers")
-      .then(res => setUserList(res.data))
-      .catch(err => alert(err))
+  function getPosts(){
+      Axios.get("http://localhost:3001/getPosts")
+      .then(res => setPosts(res.data))
+      .catch(err => console.log(err))
   }
 
   return (
     <div className="App">
-      <Container>
+      <Container fluid>
         <Row>
-          <Col className="share-section pt-5" xs={4}><ShareSection setUserList={setUserList} /></Col>
-          <Col className="feed-section pt-5" xs={8}><Feed userList={userList} /></Col>
+          <Col className="share-section p-5" xs={4}>
+            <ShareSection setPosts={setPosts} />
+          </Col>
+          <Col className="feed-section pt-5" xs={8}>
+            <Feed posts={posts} />
+          </Col>
         </Row>
       </Container>
     </div>

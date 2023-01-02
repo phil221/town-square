@@ -1,22 +1,19 @@
 import React from "react";
+import FeedItem from "../components/FeedItem";
 
-export default function Feed({ userList }) {
+export default function Feed({ posts }) {
 
   return (
-    <div className="UserList">
-        <ul>
+    <div className="posts-list">
+        <ul className="px-3 px-lg-5">
           { 
-            !!userList.length && userList.map((user, i) => {
+            !!posts.length && posts.map((post, i) => {
               return (
-                <li key={i}>
-                  <div>Name: {user.name}</div>
-                  <div>Age: {user.age}</div>
-                  <div>Username: {user.username}</div>
-                  <br />
-                </li>
+                <FeedItem key={`post-${i}`} post={post} />
               )
             })
           }
+          { !posts.length && <p>No posts found.</p> }
         </ul>
       </div>
   )
