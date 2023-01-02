@@ -27,7 +27,7 @@ function App() {
       <Container className="site-main" fluid>
         <Row>
           <Col className="share-section p-5" xs={4}>
-            <ShareSection setPosts={setPosts} />
+            <ShareSection posts={posts} setPosts={setPosts} />
           </Col>
           <Col className="feed-section pt-5" xs={8}>
             <Feed posts={posts} />
