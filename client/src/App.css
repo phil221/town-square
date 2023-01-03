@@ -33,6 +33,12 @@
   display: none;
 }
 
+.blockquote-footer img {
+  max-height: 20px;
+  max-width: 20px;
+  cursor: pointer;
+}
+
 .container-fluid {
   max-width: 1200px;
 }
