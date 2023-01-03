@@ -19,11 +19,29 @@
 .header-logo {
   height: 60px;
   object-fit: cover;
+  transition: transform 0.25s ease;
   width: 60px;
+}
+
+.header-logo:hover {
+  transform: scale(1.25);
 }
 
 .site-main {
   z-index: 0;
+}
+
+.item-actions {
+  border-top: 0.5px solid #e3e3e3;
+}
+
+.like-section {
+  cursor: pointer;
+}
+
+.like-image {
+  max-height: 20px;
+  max-width: 20px;
 }
 
 /* Bootstrap overrides **/
@@ -31,12 +49,6 @@
 .blockquote-footer::before {
   content: "";
   display: none;
-}
-
-.blockquote-footer img {
-  max-height: 20px;
-  max-width: 20px;
-  cursor: pointer;
 }
 
 .container-fluid {
@@ -52,4 +64,3 @@
 }
 
 /* END Bootstrap overrides **/
-

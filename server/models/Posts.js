@@ -12,6 +12,10 @@ const PostSchema = new Schema({
     published: {
         type: Date,
         required: true
+    },
+    numLikes: {
+        type: Number,
+        required: false
     }
 })
 

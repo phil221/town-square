@@ -29,6 +29,22 @@ app.post("/createPost", async (req, res) => {
     res.json(post);
 })
 
+app.put("/updatePostLikes", async (req, res) => {
+    const id = req.body.id;
+    const likes = req.body.likes;
+
+    try {
+        PostModel.findById(id, (error, foundPost) => {
+            foundPost.numLikes = likes;
+            foundPost.save();
+        })
+    } catch(err) {
+        console.log(err);
+    }
+
+    res.send(PostModel.findById(id));
+})
+
 app.listen(3001, () => {
     console.log("Server listening on port 3001")
 })
