@@ -13,7 +13,7 @@ export default function Feed({ posts }) {
               )
             })
           }
-          { !posts.length && <p>No posts found.</p> }
+          { !posts.length && <p>Looking for posts...</p> }
         </ul>
       </div>
   )

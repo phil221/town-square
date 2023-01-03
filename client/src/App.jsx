@@ -17,7 +17,9 @@ function App() {
 
   function getPosts(){
       Axios.get("http://localhost:3001/getPosts")
-      .then(res => setPosts(res.data))
+      .then(res => {
+        setPosts(res.data.reverse())
+      })
       .catch(err => console.log(err))
   }
 

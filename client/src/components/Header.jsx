@@ -14,7 +14,7 @@ export default function Header() {
                 <h1 className='mr-3'>Town Square</h1>
             </Navbar.Text>
             <Navbar.Text>
-                <p className='mt-0 mx-1 mb-1'>A place to share ideas, questions, quotes and whatever else...</p>
+                <p className='mt-0 mx-1 mb-1'>A place to share ideas, questions, quotes, etc.</p>
             </Navbar.Text>
         </div>
      </Navbar>
