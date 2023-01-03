@@ -7,7 +7,7 @@ export default function ShareSection({ posts, setPosts }) {
   const [postBody, setPostBody] = useState("");
 
     function addPost(){
-        Axios.post("http://localhost:3001/createPost", { username, content: postBody })
+        Axios.post("http://localhost:3001/createPost", { username, content: postBody, published: Date.now() })
           .then(res => {
             let newList = [...posts];
             newList.unshift({ username, content: postBody });

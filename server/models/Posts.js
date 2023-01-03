@@ -9,6 +9,10 @@ const PostSchema = new Schema({
         type: String,
         required: true
     },
+    published: {
+        type: Date,
+        required: true
+    }
 })
 
 const PostModel = model("posts", PostSchema);
