@@ -1,0 +1,1 @@
+Public blog app using MERN stack. Can add posts and like them. Commenting w auth in the works.
