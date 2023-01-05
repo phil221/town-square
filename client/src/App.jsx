@@ -15,6 +15,24 @@ function App() {
       getPosts();
   }, [])
 
+  function updatePostLikes(post){
+    Axios.put("http://localhost:3001/updatePostLikes", { _id: post._id, likes: post.numLikes+1 })
+    .then((res) => {
+      const postsCopy = [...posts];
+      const updatedPosts = postsCopy.map((item, i) => {
+        if(item._id === post._id){
+          const updatedItem = {
+            ...item, numLikes: item['numLikes'] ? item['numLikes']+1 : 1
+          }
+          return updatedItem;
+        }
+        return item;
+      })
+      setPosts(prev => prev = updatedPosts);
+    })
+    .catch(err => console.error(err))
+  }
+
   function getPosts(){
       Axios.get("http://localhost:3001/getPosts")
       .then(res => {
@@ -32,7 +50,7 @@ function App() {
             <ShareSection posts={posts} setPosts={setPosts} />
           </Col>
           <Col className="feed-section pt-5" xs={8}>
-            <Feed posts={posts} />
+            <Feed posts={posts} updatePostLikes={updatePostLikes} />
           </Col>
         </Row>
       </Container>

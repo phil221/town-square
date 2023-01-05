@@ -30,19 +30,18 @@ app.post("/createPost", async (req, res) => {
 })
 
 app.put("/updatePostLikes", async (req, res) => {
-    const id = req.body.id;
-    const likes = req.body.likes;
+    console.log("---- RUNNING put operation... ----")
 
     try {
-        PostModel.findById(id, (error, foundPost) => {
-            foundPost.numLikes = likes;
+        await PostModel.findById(req.body._id, (error, foundPost) => {
+            foundPost.numLikes = Number(req.body.likes);
             foundPost.save();
         })
-    } catch(err) {
-        console.log(err);
+    } catch(err){
+        console.error(err)
     }
 
-    res.send(PostModel.findById(id));
+    res.send("updated");
 })
 
 app.listen(3001, () => {
