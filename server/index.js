@@ -1,8 +1,11 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import { connect } from 'mongoose';
+import _ from 'lodash';
 import cors from 'cors';
+import bycrpt from 'bcrypt';
 import PostModel from './models/Posts.js';
+import UserModel from './models/Users.js';
 
 dotenv.config();
 const app = express();
@@ -42,6 +45,56 @@ app.put("/updatePostLikes", async (req, res) => {
     }
 
     res.send("updated");
+})
+
+app.get("/users", (req, res) => {
+    UserModel.find({}, (err, result) => {
+        if(err){
+           res.send(err) 
+        } else {
+            res.send(result)
+        }
+    })
+})
+
+app.post("/createUser", async (req, res) => {
+
+    try {
+        const hashed = await bycrpt.hash(req.body.password, 10);
+        const newUser = new UserModel({ username: req.body.username, password: hashed });
+        await newUser.save();
+
+        res.status(201).send('created user');
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('something went wrong')
+    }
+})
+
+app.post("/users/login", async(req, res) => {
+
+    UserModel.find({}, async (err, data) => {
+        if(err) {
+            res.status(400).send('user not found');
+        } else {
+            const user = _.find(data, function(item) {
+                if(item.username === req.body.username){
+                    return item;
+                } 
+            });
+
+            try {
+                if(await bycrpt.compare(req.body.password, user.password)){
+                    res.send('logged in!')
+                } else {
+                    res.send('not allowed')
+                }
+            } catch (error) {
+                console.log(error)
+                res.status(500).send()
+            }
+        }
+    })
 })
 
 app.listen(3001, () => {

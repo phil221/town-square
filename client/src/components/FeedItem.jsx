@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import convertDate from '../helpers/convertDate';
 import thumbsup from "../assets/fa-icons/thumbsup.svg";
-import thumbsupChecked from "../assets/fa-icons/thumbsupChecked.svg"
 
 function FeedItem({ post, updatePostLikes }) {
   const [isChecked, setIsChecked] = useState(false);
