@@ -12,7 +12,12 @@ function App() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-      getPosts();
+    Axios.get("http://localhost:3001/posts")
+    .then(res => {
+      // display most recent posts first
+      setPosts(res.data.reverse())
+    })
+    .catch(err => console.log(err))
   }, [])
 
   function updatePostLikes(post){
@@ -31,14 +36,6 @@ function App() {
       setPosts(prev => prev = updatedPosts);
     })
     .catch(err => console.error(err))
-  }
-
-  function getPosts(){
-      Axios.get("http://localhost:3001/getPosts")
-      .then(res => {
-        setPosts(res.data.reverse())
-      })
-      .catch(err => console.log(err))
   }
 
   return (

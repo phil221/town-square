@@ -4,6 +4,7 @@ import { connect } from 'mongoose';
 import _ from 'lodash';
 import cors from 'cors';
 import bycrpt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import PostModel from './models/Posts.js';
 import UserModel from './models/Users.js';
 
@@ -12,14 +13,25 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
+
 connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.7uukid1.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`)
 
-app.get("/getPosts", (req, res) => {
+app.get("/posts", (req, res) => {
     PostModel.find({}, (err, result) => {
         if(err) {
             res.json(err)
         } else {
             res.json(result)
+        }
+    })
+})
+
+app.get("/posts/:username", authenticateToken, (req, res) => {
+    PostModel.find({}, (err, result) => {
+        if(err) {
+            res.json(err)
+        } else {
+            res.json(result.filter(post => post.username === req.params.username))
         }
     })
 })
@@ -33,12 +45,10 @@ app.post("/createPost", async (req, res) => {
 })
 
 app.put("/updatePostLikes", async (req, res) => {
-    console.log("---- RUNNING put operation... ----")
-
     try {
-        await PostModel.findById(req.body._id, (error, foundPost) => {
-            foundPost.numLikes = Number(req.body.likes);
-            foundPost.save();
+        PostModel.findById(req.body._id, async (error, foundPost) => {
+        foundPost.numLikes = Number(req.body.likes);
+        await foundPost.save();
         })
     } catch(err){
         console.error(err)
@@ -71,31 +81,18 @@ app.post("/createUser", async (req, res) => {
     }
 })
 
-app.post("/users/login", async(req, res) => {
+function authenticateToken(req, res, next){
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    if(!token) return res.sendStatus(401)
 
-    UserModel.find({}, async (err, data) => {
-        if(err) {
-            res.status(400).send('user not found');
-        } else {
-            const user = _.find(data, function(item) {
-                if(item.username === req.body.username){
-                    return item;
-                } 
-            });
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+        if(err) return res.sendStatus(403);
+        req.user = user;
 
-            try {
-                if(await bycrpt.compare(req.body.password, user.password)){
-                    res.send('logged in!')
-                } else {
-                    res.send('not allowed')
-                }
-            } catch (error) {
-                console.log(error)
-                res.status(500).send()
-            }
-        }
+        next();
     })
-})
+}
 
 app.listen(3001, () => {
     console.log("Server listening on port 3001")
