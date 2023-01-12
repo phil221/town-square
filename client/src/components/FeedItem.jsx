@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import React, { useState, useContext } from "react";
+import { PostsContext } from "../contexts/PostsContext";
 import Card from 'react-bootstrap/Card';
 import convertDate from '../helpers/convertDate';
 import thumbsup from "../assets/fa-icons/thumbsup.svg";
 
-function FeedItem({ post, updatePostLikes }) {
+function FeedItem({ post }) {
+  const { updatePostLikes } = useContext(PostsContext);
   const [isChecked, setIsChecked] = useState(false);
   
 

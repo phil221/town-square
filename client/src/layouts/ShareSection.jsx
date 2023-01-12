@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { PostsContext } from "../contexts/PostsContext";
 import PostForm from "../components/PostForm";
 import Axios from 'axios';
 
-export default function ShareSection({ posts, setPosts }) {
+export default function ShareSection() {
+  const { posts, setPosts } = useContext(PostsContext);
   const [username, setUsername] = useState("");
   const [postBody, setPostBody] = useState("");
 

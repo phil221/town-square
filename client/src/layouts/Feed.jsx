@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { PostsContext } from "../contexts/PostsContext";
 import FeedItem from "../components/FeedItem";
 
-export default function Feed({ posts, updatePostLikes }) {
+export default function Feed() {
+  const { posts, updatePostLikes } = useContext(PostsContext);
+
   return (
     <div className="posts-list">
         <ul className="px-3 px-lg-5">
