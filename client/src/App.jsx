@@ -17,6 +17,7 @@ function App() {
     Axios.get("http://localhost:3001/posts")
     .then(res => {
       // display most recent posts first
+      // refactor this, probably
       setPosts(res.data.reverse())
     })
     .catch(err => console.log(err))

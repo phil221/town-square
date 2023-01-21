@@ -1,10 +1,11 @@
-import { useState, createContext } from "react";
+import { useState, createContext, useRef } from "react";
 import Axios from 'axios';
 
 export const PostsContext = createContext(null);
 
 export const PostsContextProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
+    const inputRef = useRef(null);
 
       function updatePostLikes(post){
         Axios.put("http://localhost:3001/updatePostLikes", { _id: post._id, likes: post.numLikes+1 })
@@ -27,7 +28,8 @@ export const PostsContextProvider = ({ children }) => {
       const value = {
         posts,
         setPosts,
-        updatePostLikes
+        updatePostLikes,
+        inputRef
       }
 
       return (

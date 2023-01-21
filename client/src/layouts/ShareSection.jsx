@@ -5,14 +5,13 @@ import Axios from 'axios';
 
 export default function ShareSection() {
   const { posts, setPosts } = useContext(PostsContext);
-  const [username, setUsername] = useState("");
-  const [postBody, setPostBody] = useState("");
+  const [formState, setFormState] = useState({ username: "", post: "" });
 
     function addPost(){
         Axios.post("http://localhost:3001/createPost", 
           { 
-            username, 
-            content: postBody, 
+            username: formState.username, 
+            content: formState.post, 
             published: Date.now(), 
             numLikes: 0 
           })
@@ -21,8 +20,8 @@ export default function ShareSection() {
             let newList = [...posts];
             newList.unshift(
               { 
-                username, 
-                content: postBody, 
+                username: formState.username, 
+                content: formState.post, 
                 published: res.data.published, 
                 numLikes: 0 
               });
@@ -34,10 +33,8 @@ export default function ShareSection() {
   return (
     <div className="posts-form mt-4">
         <PostForm 
-          username={username}
-          setUsername={setUsername}
-          postBody={postBody}
-          setPostBody={setPostBody}
+          formState={formState}
+          setFormState={setFormState}
           addPost={addPost}
         />
     </div>
