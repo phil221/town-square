@@ -32,7 +32,7 @@ function App() {
         <Header />
         <Container className="site-main" fluid>
           <Row>
-            <Col className="share-section p-5" xs={4}>
+            <Col className="share-section py-5 px-4" xs={4}>
               <ShareSection />
             </Col>
             <Col className="feed-section pt-5" xs={8}>

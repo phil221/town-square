@@ -6,7 +6,7 @@ import usePostsContext from "../hooks/usePostsContext";
 import thumbsup from "../assets/fa-icons/thumbsup.svg";
 
 type itemProps = {
-  post: Post
+  post: Post;
 }
 
 function FeedItem({ post }: itemProps ) {
