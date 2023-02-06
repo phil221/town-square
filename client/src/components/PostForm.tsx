@@ -1,18 +1,25 @@
-import { useContext } from 'react';
-import { PostsContext } from "../contexts/PostsContext";
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+
+type Props = {
+  formState: {
+    username: string;
+    post: string;
+  };
+  setFormState: React.Dispatch<React.SetStateAction<Props["formState"]>>;
+  addPost: () => void; 
+}
 
 function PostForm(
     { 
       formState, 
       setFormState, 
       addPost 
-    }
+    } : Props
   ) {
-  const { inputRef } = useContext(PostsContext);
 
-  function handleSubmit(e){
+  function handleSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     addPost();
     setFormState({ username: "", post: "" })
@@ -27,7 +34,6 @@ function PostForm(
           value={formState.username} 
           type="text" 
           placeholder="Enter a username" 
-          ref={inputRef}
         />
       </Form.Group>
 

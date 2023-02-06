@@ -1,21 +1,13 @@
-import { useContext } from 'react';
-import { PostsContext } from "../contexts/PostsContext";
+import React from 'react';
 import bugle from "../assets/images/bugle.png";
 import Navbar from 'react-bootstrap/Navbar';
 
 export default function Header() {
-  const { inputRef } = useContext(PostsContext);
-
-  const focusForm = (e) => {
-    e.preventDefault();
-
-    inputRef.current.focus();
-  }
 
   return (
     <header className="site-header py-4 px-5">
        <Navbar bg="white" expand="md">
-         <Navbar.Brand href="/" onClick={focusForm}>
+         <Navbar.Brand href="/">
             <img className='header-logo' src={bugle} alt="town square bugle logo" /> 
         </Navbar.Brand>
         <div className="d-flex flex-column">

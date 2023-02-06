@@ -1,11 +1,12 @@
-import React, { useState, useContext } from "react";
-import { PostsContext } from "../contexts/PostsContext";
+import React, { useState } from "react";
 import PostForm from "../components/PostForm";
 import Axios from 'axios';
+import usePostsContext from "../hooks/usePostsContext";
 
 export default function ShareSection() {
-  const { posts, setPosts } = useContext(PostsContext);
   const [formState, setFormState] = useState({ username: "", post: "" });
+  
+  const { posts, setPosts } = usePostsContext();
 
     function addPost(){
         Axios.post("http://localhost:3001/createPost", 

@@ -1,4 +1,4 @@
-export default function convertDate(dateString){
+export default function convertDate(dateString: string){
     return new Date(dateString)
         .toLocaleDateString('en-us', 
             { 

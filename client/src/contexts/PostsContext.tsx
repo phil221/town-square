@@ -1,13 +1,32 @@
-import { useState, createContext, useRef } from "react";
+import React, { useState, createContext, useRef } from "react";
 import Axios from 'axios';
 
-export const PostsContext = createContext(null);
+export type Post = {
+  _id?: string;
+  username: string;
+  content: string;
+  numLikes: number;
+  published: string;
+}
 
-export const PostsContextProvider = ({ children }) => {
-    const [posts, setPosts] = useState([]);
+interface PostsContextType {
+  posts: Post[];
+  setPosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  updatePostLikes: (post: Post) => void;
+}
+
+export const PostsContext = createContext<PostsContextType | null>(null);
+
+interface Props {
+  children: React.ReactNode | React.ReactNode[];
+}
+
+export const PostsContextProvider = ({ children }: Props): JSX.Element => {
+    const [posts, setPosts] = useState<Post[] | []>([]);
     const inputRef = useRef(null);
+    
 
-      function updatePostLikes(post){
+      function updatePostLikes(post: Post): void {
         Axios.put("http://localhost:3001/updatePostLikes", { _id: post._id, likes: post.numLikes+1 })
         .then((res) => {
           const postsCopy = [...posts];
